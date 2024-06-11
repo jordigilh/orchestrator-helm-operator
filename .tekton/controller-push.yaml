@@ -2,29 +2,29 @@ apiVersion: tekton.dev/v1
 kind: PipelineRun
 metadata:
   annotations:
-    build.appstudio.openshift.io/repo: https://github.com/parodos-dev/orchestrator-helm-operator?rev={{revision}}
+    build.appstudio.openshift.io/repo: https://github.com/jordigilh/orchestrator-helm-operator?rev={{revision}}
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "main"
+      == "konflux/nudge"
   creationTimestamp: null
   labels:
-    appstudio.openshift.io/application: helm-operator
+    appstudio.openshift.io/application: orchestrator-helm-operator
     appstudio.openshift.io/component: controller
     pipelines.appstudio.openshift.io/type: build
   name: controller-on-push
-  namespace: orchestrator-releng-tenant
+  namespace: jgil-tenant
 spec:
   params:
-  - name: dockerfile
-    value: Dockerfile
   - name: git-url
     value: '{{source_url}}'
-  - name: output-image
-    value: quay.io/redhat-user-workloads/orchestrator-releng-tenant/helm-operator/controller:{{revision}}
   - name: revision
     value: '{{revision}}'
+  - name: output-image
+    value: quay.io/redhat-user-workloads/jgil-tenant/orchestrator-helm-operator/controller:{{revision}}
+  - name: dockerfile
+    value: Dockerfile
   pipelineSpec:
     finally:
     - name: show-sbom
