@@ -410,7 +410,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=orchestrator-operator
-                image: quay.io/orchestrator/orchestrator-operator:0.0.7
+                image: quay.io/repository/redhat-user-workloads/jgil-tenant/orchestrator-helm-operator/controller@sha256:e269850e42060ce36b01f514305f3c1769c8ff4b54f6df6ef7448cec9d162c4b
                 livenessProbe:
                   httpGet:
                     path: /healthz
