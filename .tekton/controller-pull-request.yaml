@@ -8,7 +8,7 @@ metadata:
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
-      == "konflux/nudge" && body.pull_request.user.login != "red-hat-konflux" && ("config/***".pathChanged() || "helm-charts/***".pathChanged() || "Dockerfile".pathChanged() || "Makefile".pathChanged() || "PROJECT".pathChanged() || "watches.yaml".pathChanged() )
+      == "konflux/nudge" && ("config/***".pathChanged() || "helm-charts/***".pathChanged() || "Dockerfile".pathChanged() || "Makefile".pathChanged() || "PROJECT".pathChanged() || "watches.yaml".pathChanged() || .tekton/controller-*.yaml )
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: orchestrator-helm-operator
