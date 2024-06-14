@@ -142,7 +142,9 @@ spec:
           - name: output-body
             image: registry.access.redhat.com/ubi9/ubi
             script: |
-              echo "{{ body.push }}"
+              #!/usr/bin/env bash
+              cat /tekton/scripts/script*
+              echo '{{body}}'
     - name: init
       params:
       - name: image-url
