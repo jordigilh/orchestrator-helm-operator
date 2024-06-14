@@ -7,7 +7,7 @@ metadata:
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "konflux/nudge" && ( "bundle/***".pathChanged() || ".tekton/bundle-push.yaml".pathChanged() || "bundle.konflux.Dockerfile".pathChanged() )
+      == "konflux/nudge" && ( "bundle/***".pathChanged() || ".tekton/bundle-bundle.yaml".pathChanged() || "bundle.konflux.Dockerfile".pathChanged() )
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: orchestrator-helm-operator
