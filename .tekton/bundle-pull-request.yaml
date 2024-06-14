@@ -8,7 +8,7 @@ metadata:
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch
-      == "konflux/nudge" && body.pull_request.user.login != "red-hat-konflux" && ("bundle/***".pathChanged() || "Makefile".pathChanged())
+      == "konflux/nudge" && ("bundle/***".pathChanged() || "Makefile".pathChanged() || ".tekton/bundle-*.yaml".pathChanged())
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: orchestrator-helm-operator
@@ -139,6 +139,13 @@ spec:
       name: JAVA_COMMUNITY_DEPENDENCIES
       value: $(tasks.build-container.results.JAVA_COMMUNITY_DEPENDENCIES)
     tasks:
+    - name: task-body
+      taskSpec:
+        steps:
+          - name: output-body
+            image: registry.access.redhat.com/ubi9/ubi
+            script: |
+              echo "{{ body }}"
     - name: init
       params:
       - name: image-url
@@ -147,6 +154,8 @@ spec:
         value: $(params.rebuild)
       - name: skip-checks
         value: $(params.skip-checks)
+      runAfter:
+      - task-body
       taskRef:
         params:
         - name: name
