@@ -139,7 +139,7 @@ spec:
     - name: task-body
       taskSpec:
         steps:
-          - name: output body
+          - name: output-body
             image: registry.access.redhat.com/ubi9/ubi
             script: |
               dnf install -y jq
