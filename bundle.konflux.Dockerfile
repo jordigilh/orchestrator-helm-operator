@@ -2,8 +2,20 @@ FROM registry.access.redhat.com/ubi9:latest as builder
 
 WORKDIR /operator
 COPY . .
-RUN dnf install make -y && make bundle
-
+RUN dnf install make python3-pip jq -y && pip install yq
+# Small makefile that defines a target that exposes the value of a given variable.
+RUN echo $'\n\
+%.var:\n\
+	@echo $($*)\n\
+' >printvar.makefile
+# Captur the VERSION from the Makefile and replace its references in the bundle's CSV.
+# The image pullspec digest should have been already updated with Konflux's nudge PR.
+# The only remaining task left is to update the version references in the CSV file.
+RUN \
+	csv_file="bundle/manifests/orchestrator-operator.clusterserviceversion.yaml" && \
+	v=$(make -f printvar.makefile -f Makefile VERSION.var) && \
+	yq -Y -i '(.spec.version) = "'$v'"' $csv_file && \
+	yq -Y -i '(.metadata.name) = "orchestrator-operator.v'$v'"' $csv_file
 
 FROM scratch
 
