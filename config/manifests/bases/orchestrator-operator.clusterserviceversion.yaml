@@ -55,4 +55,4 @@ spec:
   provider:
     name: Red Hat
     url: https://parodos.dev
-  version: 0.0.6
+  version: 0.0.8
