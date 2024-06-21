@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9:latest as builder
+FROM registry.redhat.io/ubi9:latest as builder
 ARG IMG=quay.io/redhat-user-workloads/orchestrator-releng-tenant/helm-operator/operator-controller@sha256:3f4cbc654e285a088932d914c2c27b2dfa160dc68997a0057acc5a3392f02669
 WORKDIR /operator
 COPY . .
@@ -12,7 +12,7 @@ LABEL operators.operatorframework.io.bundle.manifests.v1=manifests/
 LABEL operators.operatorframework.io.bundle.metadata.v1=metadata/
 LABEL operators.operatorframework.io.bundle.package.v1=orchestrator-operator
 LABEL operators.operatorframework.io.bundle.channels.v1=alpha
-LABEL operators.operatorframework.io.metrics.builder=operator-sdk-v1.33.0
+LABEL operators.operatorframework.io.metrics.builder=operator-sdk-v1.35.0
 LABEL operators.operatorframework.io.metrics.mediatype.v1=metrics+v1
 LABEL operators.operatorframework.io.metrics.project_layout=helm.sdk.operatorframework.io/v1
 
